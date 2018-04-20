@@ -16,9 +16,8 @@ class Stock
     @options = OptionParsing.new.parse_options
   end
 
-  def print_options
-    puts options.inspect
+  def generate_report
   end
 end
 
-Stock.new.print_options
+Stock.new.generate_report

@@ -22,7 +22,7 @@ class OptionParsing
   end
 
   def add_start_option
-    parser.on('--begin DATE', 'The start date') do |start_date_param|
+    parser.on('--start DATE', 'The start date') do |start_date_param|
       options[:start_date] = Date.parse(start_date_param)
     end
   end
