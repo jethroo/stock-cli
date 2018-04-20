@@ -1,9 +1,8 @@
 # frozen_string_literal: true
 
-require 'httparty'
-require 'json'
+require_relative '../calculations/drawdown'
 
-# wrapper class for the quandl API
+# simple console reporter
 class Console
   attr_reader :data
 
@@ -22,7 +21,12 @@ class Console
   end
 
   def first_drawdowns
-
+    Drawdown.new(data).drawdowns.each do |drawdown|
+      color_puts(
+        "#{drawdown[1]} on #{drawdown[0]} -> #{drawdown[2]} on #{drawdown[3]}",
+        31
+      )
+    end
   end
 
   def maximum_drawdown
