@@ -31,6 +31,10 @@ class Quandl
   end
 
   def formatted_query_string
-    format(PRICES_QUERY, ticker: 'APPL', range: '2018-01-01', api_key: api_key)
+    format(PRICES_QUERY, ticker: ticker, range: date_range, api_key: api_key)
+  end
+
+  def date_range
+    (starts..ends).map(&:iso8601).join('%2C')
   end
 end
