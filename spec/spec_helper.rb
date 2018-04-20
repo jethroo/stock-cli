@@ -9,7 +9,6 @@ end
 
 require 'rspec'
 require 'byebug'
-require 'timecop'
 
 require File.expand_path '../stock.rb', __dir__
 
