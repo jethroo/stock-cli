@@ -6,7 +6,6 @@ require 'bundler/setup'
 require 'byebug'
 
 require 'date'
-require 'optparse'
 require_relative 'lib/option_parsing'
 
 # A tool for printing and sharing stock information from quandl.

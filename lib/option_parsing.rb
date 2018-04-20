@@ -1,3 +1,8 @@
+# frozen_string_literal: true
+
+require 'optparse'
+
+# sets up the OptionParser for stock.rb
 class OptionParsing
   attr_reader :parser
   attr_reader :options
