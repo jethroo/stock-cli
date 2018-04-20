@@ -8,6 +8,7 @@ require 'byebug'
 require 'date'
 require_relative 'lib/option_parsing'
 require_relative 'lib/datasources/quandl'
+require_relative 'lib/reports/console'
 
 # A tool for printing and sharing stock information from quandl.
 class Stock
@@ -18,9 +19,10 @@ class Stock
   end
 
   def generate_report
-    Quandl.new(
+    data = Quandl.new(
       options[:stock], options[:start_date], options[:end_date]
     ).pull_data
+    Console.new(data).generate_report
   end
 end
 

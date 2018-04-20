@@ -9,7 +9,7 @@ class Quandl
 
   BASE_URL = 'https://www.quandl.com/api/v3/datasets/EOD/'
   PRICES_QUERY = '%<company_code>s.json?start_date=%<start_date>s&end_date'\
-    '=%<end_date>s&api_key=%<api_key>s'
+    '=%<end_date>s&api_key=%<api_key>s&order=asc'
 
   def initialize(company_code, starts, ends)
     @company_code = company_code
@@ -20,7 +20,7 @@ class Quandl
   def pull_data
     return @data if @data
     response = HTTParty.get("#{BASE_URL}#{formatted_query_string}")
-    @data = response.parsed_response
+    @data = response.parsed_response['dataset']
   end
 
   private
