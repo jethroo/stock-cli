@@ -35,6 +35,7 @@ class OptionParsing
 
   def parse_options
     parser.parse!
+    options[:end_date] = Date.today unless options[:end_date]
     options
   rescue StandardError => e
     puts "Error while parsing command line params: #{e.message}"
