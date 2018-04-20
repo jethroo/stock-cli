@@ -5,13 +5,14 @@ require 'json'
 
 # wrapper class for the quandl API
 class Quandl
-  attr_reader :ticker, :starts, :ends
+  attr_reader :company_code, :starts, :ends
 
-  BASE_URL = 'https://www.quandl.com/api/v3/datatables/WIKI/PRICES'
-  PRICES_QUERY = '?ticker=%<ticker>s&date=%<range>s&api_key=%<api_key>s'
+  BASE_URL = 'https://www.quandl.com/api/v3/datasets/EOD/'
+  PRICES_QUERY = '%<company_code>s.json?start_date=%<start_date>s&end_date'\
+    '=%<end_date>s&api_key=%<api_key>s'
 
-  def initialize(ticker, starts, ends)
-    @ticker = ticker
+  def initialize(company_code, starts, ends)
+    @company_code = company_code
     @starts = starts
     @ends = ends
   end
@@ -31,10 +32,7 @@ class Quandl
   end
 
   def formatted_query_string
-    format(PRICES_QUERY, ticker: ticker, range: date_range, api_key: api_key)
-  end
-
-  def date_range
-    (starts..ends).map(&:iso8601).join('%2C')
+    format(PRICES_QUERY, company_code: company_code,
+                         start_date: starts, end_date: ends, api_key: api_key)
   end
 end
