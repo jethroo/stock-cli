@@ -14,7 +14,7 @@ class Console
   def generate_report
     return unless data && data['data']
     data['data'].each do |day|
-      puts "#{day[0]}: Closed at #{day[4]} (#{day[3]} ~ #{day[2]})"
+      color_puts("#{day[0]}: Closed at #{day[4]} (#{day[3]} ~ #{day[2]})", 32)
     end
     first_drawdowns
     maximum_drawdown
@@ -31,5 +31,11 @@ class Console
 
   def return_summary
 
+  end
+
+  private
+
+  def color_puts(text, color)
+    puts "\033[#{color}m #{text}\033[0m"
   end
 end
