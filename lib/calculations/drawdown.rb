@@ -3,7 +3,8 @@
 module Calculations
   # class for calculating drawdowns in an dataset
   class Drawdown
-    attr_reader :dataset
+    attr_reader :dataset, :peak_before_largest_drop, :lowest_before_new_high,
+                :new_peak, :new_low, :peak_day, :low_day
 
     Struct.new('DrawdownSummary',
                :percentage, :peak_day, :peak_before_largest_drop,
@@ -15,39 +16,39 @@ module Calculations
 
     def drawdowns
       return unless dataset
-      peak_before_largest_drop = nil
-      lowest_before_new_high = nil
-      new_peak = false
-      new_low = false
-      peak_day = nil
-      low_day = nil
+      @peak_before_largest_drop = nil
+      @lowest_before_new_high = nil
+      @new_peak = false
+      @new_low = false
+      @peak_day = nil
+      @low_day = nil
 
       drawdowns = []
 
       dataset.each do |day|
         if peak_before_largest_drop.nil?
-          peak_before_largest_drop = day.high
-          peak_day = day.date
-          new_peak = true
+          @peak_before_largest_drop = day.high
+          @peak_day = day.date
+          @new_peak = true
         end
 
         if day.high > peak_before_largest_drop
-          peak_before_largest_drop = day.high
-          lowest_before_new_high = nil
-          peak_day = day.date
-          new_peak = true
+          @peak_before_largest_drop = day.high
+          @lowest_before_new_high = nil
+          @peak_day = day.date
+          @new_peak = true
         end
 
         if lowest_before_new_high.nil?
-          lowest_before_new_high = day.low
-          new_low = true
-          low_day = day.date
+          @lowest_before_new_high = day.low
+          @new_low = true
+          @low_day = day.date
         end
 
         if lowest_before_new_high > day.low
-          lowest_before_new_high = day.low
-          new_low = true
-          low_day = day.date
+          @lowest_before_new_high = day.low
+          @new_low = true
+          @low_day = day.date
         end
 
         if new_peak || new_low
@@ -58,7 +59,7 @@ module Calculations
           )
         end
 
-        new_low, new_peak = false
+        @new_low, @new_peak = false
       end
       drawdowns
     end
