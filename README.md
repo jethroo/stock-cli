@@ -2,6 +2,10 @@
 
 [![Build Status](https://travis-ci.org/jethroo/stock-cli.svg?branch=master)](https://travis-ci.org/jethroo/stock-cli)
 
+[![Maintainability](https://api.codeclimate.com/v1/badges/88a6fe9ca1b61826a527/maintainability)](https://codeclimate.com/github/jethroo/stock-cli/maintainability)
+
+[![Test Coverage](https://api.codeclimate.com/v1/badges/88a6fe9ca1b61826a527/test_coverage)](https://codeclimate.com/github/jethroo/stock-cli/test_coverage)
+
 A tool for printing and sharing stock information from quandl.
 
 ## Project Setup 
