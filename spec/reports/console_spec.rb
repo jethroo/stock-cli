@@ -16,10 +16,32 @@ describe Console do
       ]
     end
 
-    it 'prints a summary for each day' do
-      allow(console).to receive(:color_puts)
-      console.generate_report
-      expect(console).to have_received(:color_puts).exactly(3).times
+    context 'day summary' do
+      before do
+        allow(console).to receive(:color_puts)
+        allow(console).to receive(:first_drawdowns)
+        allow(console).to receive(:maximum_drawdown)
+        allow(console).to receive(:return_summary)
+      end
+
+      it 'printed for each day' do
+        console.generate_report
+        expect(console).to have_received(:color_puts).exactly(3).times
+      end
+    end
+
+    context 'drawdowns summary' do
+      let(:drawdown) { instance_double('drawdown', drawdowns: []) }
+
+      before do
+        allow(console).to receive(:color_puts)
+        allow(Drawdown).to receive(:new).and_return(drawdown)
+      end
+
+      it 'generated from Drawdown class' do
+        console.generate_report
+        expect(Drawdown).to have_received(:new)
+      end
     end
   end
 end

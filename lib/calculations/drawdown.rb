@@ -43,10 +43,12 @@ class Drawdown
         lowest_before_new_high = day[3]
         new_low = true
         low_day = day[0]
-     end
+      end
 
       if new_peak || new_low
-        drawdowns << [peak_day, peak_before_largest_drop, lowest_before_new_high, low_day]
+        drawdowns << [
+          peak_day, peak_before_largest_drop, lowest_before_new_high, low_day
+        ]
       end
 
       new_low, new_peak = false

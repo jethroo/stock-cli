@@ -10,8 +10,10 @@ describe Quandl do
 
   describe '#pull_data' do
     let(:response) { instance_double('response', parsed_response: {}) }
+    let(:quandl_secrets) { { 'api_key' => 'an_api_key' } }
 
     before do
+      allow(YAML).to receive(:load_file).and_return(quandl_secrets)
       allow(HTTParty).to receive(:get).and_return(response)
     end
 
@@ -19,8 +21,7 @@ describe Quandl do
       expect(quandl.pull_data).to eq(nil)
       expect(HTTParty).to have_received(:get)
         .with('https://www.quandl.com/api/v3/datasets/EOD/AAPL.json?start_date'\
-          '=2018-01-01&end_date=2018-01-05&api_key=cx9v_iDQveQ81HJesPzQ'\
-          '&order=asc')
+          '=2018-01-01&end_date=2018-01-05&api_key=an_api_key&order=asc')
     end
   end
 end

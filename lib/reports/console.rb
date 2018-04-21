@@ -30,11 +30,9 @@ class Console
   end
 
   def maximum_drawdown
-
   end
 
   def return_summary
-
   end
 
   private
