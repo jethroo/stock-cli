@@ -34,7 +34,7 @@ module Calculations
     describe '#drawdowns' do
       let(:dataset) { [day_1, day_2, day_3, day_4] }
 
-      it 'should find the drawdows correctly' do
+      it 'should find the drawdowns correctly' do
         expect(drawdown.drawdowns.count).to eq(4)
         expect(drawdown.drawdowns[0].percentage).to be_within(0.001).of(1.8)
         expect(drawdown.drawdowns[1].percentage).to be_within(0.001).of(1.5)
