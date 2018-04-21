@@ -14,18 +14,24 @@ module Reports
 
     def generate_report
       return unless dataset
-      dataset.each do |day|
-        color_puts(
-          "#{day.date}: Closed at #{day.close} (#{day.low} ~ #{day.high})",
-          32
-        )
-      end
+      days_report
       put_seperator_line
       first_drawdowns
       put_seperator_line
       maximum_drawdown
       put_seperator_line
       return_summary
+    end
+
+    private
+
+    def days_report
+      dataset.each do |day|
+        color_puts(
+          "#{day.date}: Closed at #{day.close} (#{day.low} ~ #{day.high})",
+          32
+        )
+      end
     end
 
     def first_drawdowns
@@ -55,8 +61,6 @@ module Reports
       )
     end
 
-    private
-
     def drawdowm_print_template(drawdown)
       "~ #{drawdown.percentage}% #{drawdown.peak_before_largest_drop} on "\
         "#{drawdown.peak_day} -> #{drawdown.lowest_before_new_high} on "\
@@ -64,7 +68,7 @@ module Reports
     end
 
     def calculated_drawdowns
-      @drawdowns ||= Calculations::Drawdown.new(dataset).drawdowns
+      @calculated_drawdowns ||= Calculations::Drawdown.new(dataset).drawdowns
     end
 
     def put_seperator_line

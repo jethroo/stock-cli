@@ -20,6 +20,7 @@ module Reports
       context 'day summary' do
         before do
           allow(console).to receive(:color_puts)
+          allow(console).to receive(:put_seperator_line)
           allow(console).to receive(:first_drawdowns)
           allow(console).to receive(:maximum_drawdown)
           allow(console).to receive(:return_summary)
@@ -36,6 +37,9 @@ module Reports
 
         before do
           allow(console).to receive(:color_puts)
+          allow(console).to receive(:put_seperator_line)
+          allow(console).to receive(:maximum_drawdown)
+          allow(console).to receive(:return_summary)
           allow(Calculations::Drawdown).to receive(:new).and_return(drawdown)
         end
 
