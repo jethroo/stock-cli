@@ -6,7 +6,7 @@ require 'bundler/setup'
 require 'byebug'
 
 require 'date'
-require_relative 'lib/option_parsing'
+require_relative 'lib/helpers/option_parsing'
 require_relative 'lib/datasources/quandl'
 require_relative 'lib/reports/console'
 
@@ -15,14 +15,14 @@ class Stock
   attr_reader :options
 
   def initialize
-    @options = OptionParsing.new.parse_options
+    @options = Helpers::OptionParsing.new.parse_options
   end
 
   def generate_report
-    data = Quandl.new(
+    data = Datasources::Quandl.new(
       options[:stock], options[:start_date], options[:end_date]
     ).pull_data
-    Console.new(data).generate_report
+    Reports::Console.new(data).generate_report
   end
 end
 
