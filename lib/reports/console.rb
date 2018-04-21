@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 require_relative '../calculations/drawdown'
+require_relative '../calculations/return'
 
 module Reports
   # simple console reporter
@@ -37,7 +38,7 @@ module Reports
     end
 
     def maximum_drawdown
-      maximum = @drawdowns.max_by(&:percentage)
+      maximum = calculated_drawdowns.max_by(&:percentage)
       color_puts(
         "Maximum drawdown: #{drawdowm_print_template(maximum)}",
         105
@@ -45,6 +46,13 @@ module Reports
     end
 
     def return_summary
+      summary = Calculations::Return.new(dataset).return_summary
+      color_puts(
+        "Return:  #{summary.return_value} [+#{summary.percentage}%]"\
+          "(#{summary.start_value} on #{summary.start_date} ->"\
+          " #{summary.end_value} on #{summary.end_date})",
+        32
+      )
     end
 
     private
@@ -61,7 +69,11 @@ module Reports
 
     def put_seperator_line
       puts ''
-      color_puts '─────────────────────────────────────────────────────────', 34
+      color_puts(
+        '─────────────────────────────────────────────────────────'\
+        '─────────────────────────',
+        34
+      )
       puts ''
     end
 
