@@ -1,5 +1,7 @@
 # Stock CLI
 
+[![Build Status](https://travis-ci.org/jethroo/stock-cli.svg?branch=master)](https://travis-ci.org/jethroo/stock-cli)
+
 A tool for printing and sharing stock information from quandl.
 
 ## Project Setup 
