@@ -19,29 +19,51 @@ module Reports
           32
         )
       end
+      put_seperator_line
       first_drawdowns
+      put_seperator_line
       maximum_drawdown
+      put_seperator_line
       return_summary
     end
 
     def first_drawdowns
-      Calculations::Drawdown.new(dataset).drawdowns.each do |drawdown|
+      calculated_drawdowns.each do |drawdown|
         color_puts(
-          "~ #{drawdown.percentage}% #{drawdown.peak_before_largest_drop} on "\
-            "#{drawdown.peak_day} -> #{drawdown.lowest_before_new_high} on "\
-            " #{drawdown.low_day}",
-          31
+          drawdowm_print_template(drawdown),
+          101
         )
       end
     end
 
     def maximum_drawdown
+      maximum = @drawdowns.max_by(&:percentage)
+      color_puts(
+        "Maximum drawdown: #{drawdowm_print_template(maximum)}",
+        105
+      )
     end
 
     def return_summary
     end
 
     private
+
+    def drawdowm_print_template(drawdown)
+      "~ #{drawdown.percentage}% #{drawdown.peak_before_largest_drop} on "\
+        "#{drawdown.peak_day} -> #{drawdown.lowest_before_new_high} on "\
+        " #{drawdown.low_day}"
+    end
+
+    def calculated_drawdowns
+      @drawdowns ||= Calculations::Drawdown.new(dataset).drawdowns
+    end
+
+    def put_seperator_line
+      puts ''
+      color_puts '─────────────────────────────────────────────────────────', 34
+      puts ''
+    end
 
     def color_puts(text, color)
       puts "\033[#{color}m #{text}\033[0m"
