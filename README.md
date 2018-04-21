@@ -11,3 +11,9 @@ Requirements:
 ### Installing gems
 
 run ```bundle install```
+
+## Running the programm
+
+```
+ruby stock.rb --stock AAPL --start 2018-01-01 --end 2018-01-05
+```

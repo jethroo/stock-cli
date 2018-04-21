@@ -5,16 +5,19 @@ require_relative '../calculations/drawdown'
 module Reports
   # simple console reporter
   class Console
-    attr_reader :data
+    attr_reader :dataset
 
-    def initialize(data)
-      @data = data
+    def initialize(dataset)
+      @dataset = dataset
     end
 
     def generate_report
-      return unless data && data['data']
-      data['data'].each do |day|
-        color_puts("#{day[0]}: Closed at #{day[4]} (#{day[3]} ~ #{day[2]})", 32)
+      return unless dataset
+      dataset.each do |day|
+        color_puts(
+          "#{day.date}: Closed at #{day.close} (#{day.low} ~ #{day.high})",
+          32
+        )
       end
       first_drawdowns
       maximum_drawdown
@@ -22,6 +25,7 @@ module Reports
     end
 
     def first_drawdowns
+      return
       Calculations::Drawdown.new(data).drawdowns.each do |drawdown|
         color_puts(
           "#{drawdown[1]} on #{drawdown[0]} -> #{drawdown[2]} on #{drawdown[3]}",
