@@ -3,6 +3,9 @@
 ENV['CL_ENV'] = 'test'
 
 require 'simplecov'
+require 'simplecov-console'
+
+SimpleCov.formatter = SimpleCov.formatter = SimpleCov::Formatter::Console
 
 SimpleCov.start do
   add_filter '/config/'
