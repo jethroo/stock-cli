@@ -10,7 +10,9 @@ module Datasources
     end
 
     describe '#pull_data' do
-      let(:response) { instance_double('response', parsed_response: {}) }
+      let(:response) do
+        instance_double('response', parsed_response: {}, code: 200)
+      end
       let(:quandl_secrets) { { 'api_key' => 'an_api_key' } }
 
       before do
@@ -19,7 +21,7 @@ module Datasources
       end
 
       it 'pulls data from quandl' do
-        expect(quandl.pull_data).to eq(nil)
+        expect(quandl.pull_data).to eq([])
         expect(HTTParty).to have_received(:get)
           .with('https://www.quandl.com/api/v3/datasets/EOD/AAPL.json?start_'\
             'date=2018-01-01&end_date=2018-01-05&api_key=an_api_key&order=asc')

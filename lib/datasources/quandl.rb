@@ -28,6 +28,7 @@ module Datasources
     private
 
     def map_dataset(response)
+      return [] unless response.parsed_response['dataset']
       response.parsed_response['dataset']['data'].map do |day|
         Models::DayEntry.new(map_day_entry(day))
       end
