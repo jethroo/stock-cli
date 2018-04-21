@@ -25,10 +25,11 @@ module Reports
     end
 
     def first_drawdowns
-      return
-      Calculations::Drawdown.new(data).drawdowns.each do |drawdown|
+      Calculations::Drawdown.new(dataset).drawdowns.each do |drawdown|
         color_puts(
-          "#{drawdown[1]} on #{drawdown[0]} -> #{drawdown[2]} on #{drawdown[3]}",
+          "~ #{drawdown.percentage}% #{drawdown.peak_before_largest_drop} on "\
+            "#{drawdown.peak_day} -> #{drawdown.lowest_before_new_high} on "\
+            " #{drawdown.low_day}",
           31
         )
       end
