@@ -28,4 +28,4 @@ class Stock
   end
 end
 
-Stock.new.generate_report
+Stock.new.generate_report unless ENV['CL_ENV'] == 'test'
