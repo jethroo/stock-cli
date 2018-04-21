@@ -6,8 +6,10 @@ require 'bundler/setup'
 require 'byebug'
 
 require 'date'
+
 require_relative 'lib/helpers/option_parsing'
 require_relative 'lib/datasources/quandl'
+require_relative 'lib/models/day_entry'
 require_relative 'lib/reports/console'
 
 # A tool for printing and sharing stock information from quandl.

@@ -5,15 +5,15 @@ require File.expand_path '../spec_helper.rb', __dir__
 module Reports
   describe Console do
     subject(:console) do
-      described_class.new('data' => data)
+      described_class.new(dataset)
     end
 
     describe '#generate_report' do
-      let(:data) do
+      let(:dataset) do
         [
-          ['day1', nil, 'high1', 'low1', 'close1'],
-          ['day2', nil, 'high2', 'low2', 'close2'],
-          ['day3', nil, 'high3', 'low3', 'close3']
+          Models::DayEntry.new(sample_data_entry(1)),
+          Models::DayEntry.new(sample_data_entry(2)),
+          Models::DayEntry.new(sample_data_entry(3))
         ]
       end
 
@@ -44,6 +44,14 @@ module Reports
           expect(Calculations::Drawdown).to have_received(:new)
         end
       end
+    end
+
+    def sample_data_entry(number)
+      {
+        date: "day#{number}", open: "open#{number}",
+        high: "high#{number}", low: "low#{number}",
+        close: "close#{number}"
+      }
     end
   end
 end

@@ -21,10 +21,31 @@ module Datasources
     def pull_data
       return @data if @data
       response = HTTParty.get("#{BASE_URL}#{formatted_query_string}")
-      @data = response.parsed_response['dataset']
+      @data = []
+      @data = map_dataset(response) if response.code == 200
     end
 
     private
+
+    def map_dataset(response)
+      return [] unless response.parsed_response['dataset']
+      response.parsed_response['dataset']['data'].map do |day|
+        Models::DayEntry.new(map_day_entry(day))
+      end
+    end
+
+    # EOD order of fields
+    # ["Date", "Open", "High", "Low", "Close", "Volume",
+    #  "Dividend", "Split", "Adj_Open", "Adj_High", "Adj_Low",
+    #  "Adj_Close", "Adj_Volume"]
+
+    def map_day_entry(day_entry)
+      {
+        date: day_entry[0], open: day_entry[1],
+        high: day_entry[2], low: day_entry[3],
+        close: day_entry[4]
+      }
+    end
 
     def api_key
       @api_key ||= YAML.load_file(
