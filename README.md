@@ -55,7 +55,7 @@ The program will generate an report like:
 
 ## Running tests
 
-run ```bundle exec rpec```
+run ```bundle exec rspec```
 
 ## Running rubocop
 
